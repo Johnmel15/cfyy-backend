@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Appointment } from "../models/Appointment";
+import Appointment from "../models/Appointment";
 
 export const getAppointments = async (_req: Request, res: Response) => {
   const appointments = await Appointment.findAll();

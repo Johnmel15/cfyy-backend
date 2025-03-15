@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Career } from "../models/Career";
+import Career from "../models/Career";
 
 export const getCareers = async (_req: Request, res: Response) => {
   const careers = await Career.findAll();

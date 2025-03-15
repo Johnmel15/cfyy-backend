@@ -1,13 +1,33 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/db"; // Ensure the correct path to your DB config
 
-@Table({ timestamps: true })
-export class Career extends Model {
-  @Column({ primaryKey: true, autoIncrement: true, type: DataType.INTEGER })
-  id!: number;
-
-  @Column({ allowNull: false, type: DataType.STRING })
-  title!: string;
-
-  @Column({ allowNull: false, type: DataType.TEXT })
-  description!: string;
+class Career extends Model {
+  public id!: number;
+  public title!: string;
+  public description!: string;
 }
+
+Career.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: "careers",
+    timestamps: true, // Keeps createdAt & updatedAt fields
+  }
+);
+
+export default Career;

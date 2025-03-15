@@ -1,18 +1,26 @@
-import { Table, Column, Model, DataType, ForeignKey } from "sequelize-typescript";
-import { User } from "./User";
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/db";
+import User from "./User";
 
-@Table({ timestamps: true })
-export class Appointment extends Model {
-  @Column({ primaryKey: true, autoIncrement: true, type: DataType.INTEGER })
-  id!: number;
-
-  @ForeignKey(() => User)
-  @Column({ type: DataType.INTEGER })
-  userId!: number;
-
-  @Column({ allowNull: false, type: DataType.DATE })
-  date!: Date;
-
-  @Column({ allowNull: false, type: DataType.STRING })
-  status!: string;
+class Appointment extends Model {
+  public id!: number;
+  public userId!: number;
+  public date!: Date;
+  public status!: string;
 }
+
+Appointment.init(
+  {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: User, key: "id" },
+    },
+    date: { type: DataTypes.DATE, allowNull: false },
+    status: { type: DataTypes.STRING, allowNull: false },
+  },
+  { sequelize, tableName: "appointments" }
+);
+
+export default Appointment;
