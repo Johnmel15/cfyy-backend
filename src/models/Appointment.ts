@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/db";
-import User from "./User";
+import { User } from "../models";
 
 class Appointment extends Model {
   public id!: number;
@@ -16,6 +16,7 @@ Appointment.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: User, key: "id" },
+      onDelete: "CASCADE",
     },
     date: { type: DataTypes.DATE, allowNull: false },
     status: { type: DataTypes.STRING, allowNull: false },
